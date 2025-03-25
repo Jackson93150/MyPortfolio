@@ -26,10 +26,10 @@ export default function Header() {
       >
         hello i’m jackson and this is my story
       </motion.p>
+      
       <TiltImage
         src="/header-cadre.png"
         alt="cadre"
-        className="absolute h-auto w-[82vw] lg:h-[85vh] lg:w-auto -translate-y-20"
         height={2500}
         width={2500}
       />
