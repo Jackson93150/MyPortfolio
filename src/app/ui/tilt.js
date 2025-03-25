@@ -50,7 +50,7 @@ const TiltImage = ({ src, alt, height, width }) => {
         transformStyle: "preserve-3d",
         perspective: PERSPECTIVE,
       }}
-       className="absolute w-[85vw] aspect-square md:h-[60vw] md:w-auto -translate-y-20"
+       className="absolute w-[85vw] aspect-square md:h-[85vh] md:w-auto -translate-y-20"
     >
       <motion.div
         initial={{ scale: 0 }}
