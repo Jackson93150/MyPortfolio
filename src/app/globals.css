@@ -1,26 +1,59 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-work-sans), sans-serif;
+  letter-spacing: 0.25em;
+}
+
+p {
+  font-family: var(--font-work-sans), sans-serif;
+  letter-spacing: 0.25em;
+}
+
+span {
+  font-family: var(--font-work-sans), sans-serif;
+}
+
+h1 {
+  font-family: var(--font-pacifico), cursive;
+}
+
+h2 {
+  font-family: var(--font-pacifico), cursive;
+}
+
+.gradient-background {
+  background: linear-gradient(270deg, #22404f, #0f1536);
+  background-size: 150% 120%;
+  animation: gradient-animation 5s ease infinite;
+  position: absolute; /* Ensure the background is absolutely positioned */
+  inset: 0 0 0 0; /* Position background to fill the parent */
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gradient-background::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: overlay;
+  background-repeat: repeat;
+  background-position: top center;
+  background-image: url(https://grainy-gradients.vercel.app/noise.svg);
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 70% 0%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
 }
