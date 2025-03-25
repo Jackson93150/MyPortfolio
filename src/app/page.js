@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
+import TiltImage from "./ui/tilt";
 
 export default function Home() {
   const mouseX = useMotionValue(0);
@@ -29,7 +30,7 @@ export default function Home() {
           x: smoothX,
           y: smoothY,
           mixBlendMode: "soft-light",
-          filter: "blur(20px)"
+          filter: "blur(20px)",
         }}
       />
       <main className="relative flex flex-col min-h-screen w-full items-center">
@@ -57,26 +58,13 @@ export default function Home() {
           >
             hello i’m jackson and this is my story
           </motion.p>
-
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{
-              type: "spring",
-              stiffness: 200,
-              damping: 10,
-              delay: 0.3,
-            }}
-            className="absolute h-[85vh] w-auto -translate-y-20 pointer-events-none"
-          >
-            <Image
-              src="/header-cadre.png"
-              alt="cadre"
-              height={2500}
-              width={2500}
-              className="h-full w-auto pointer-events-none"
-            />
-          </motion.div>
+          <TiltImage
+            src="/header-cadre.png"
+            alt="cadre"
+            className="absolute h-[85vh] w-auto -translate-y-20"
+            height={2500}
+            width={2500}
+          />
         </div>
       </main>
     </div>
