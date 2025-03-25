@@ -33,7 +33,7 @@ export default function Home() {
           filter: "blur(20px)",
         }}
       />
-      <main className="relative flex flex-col min-h-screen w-full items-center">
+      <main className="relative flex flex-col min-h-screen h-fit w-full items-center">
         <div className="gradient-background absolute inset-0 w-full h-full pointer-events-none" />
         <Header/>
         <About />
