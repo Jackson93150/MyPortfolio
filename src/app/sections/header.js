@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Image from "next/image";
+import TiltImage from "../ui/tilt";
 
 export default function Header() {
   return (
@@ -26,26 +26,13 @@ export default function Header() {
       >
         hello i’m jackson and this is my story
       </motion.p>
-
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 10,
-          delay: 0.5,
-        }}
-        className="absolute w-[85vw] h-auto md:h-[85vh] md:w-auto -translate-y-20"
-      >
-        <Image
-          src="/header-cadre.png"
-          alt="cadre"
-          height={2500}
-          width={2500}
-          className="h-full w-auto"
-        />
-      </motion.div>
+      
+      <TiltImage
+        src="/header-cadre.png"
+        alt="cadre"
+        height={2500}
+        width={2500}
+      />
     </div>
   );
 }
