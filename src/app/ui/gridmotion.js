@@ -28,7 +28,7 @@ const GridMotion = ({ items = [], gradientColor = "black" }) => {
       const scrollX = window.scrollX || window.pageXOffset;
       const scrollY = window.scrollY || window.pageYOffset;
 
-      const screenFactor = Math.max(0.3, window.innerWidth / 1920); // Scale factor for smaller screens
+      const screenFactor = Math.max(0.5, window.innerWidth / 1920);
 
       mouseXRef.current =
         window.innerWidth / 2 + (scrollX - scrollY) * screenFactor;
