@@ -1,24 +1,24 @@
 const gridItems = [
-  { id: 1, size: "col-span-1 row-span-2" },
-  { id: 2, size: "col-span-2 row-span-2" },
-  { id: 3, size: "md:col-span-2 row-span-3 col-span-3" },
-  { id: 4, size: "col-span-1 row-span-2" },
-  { id: 5, size: "md:col-span-1 md:row-span-1" },
-  { id: 6, size: "md:col-span-1 md:row-span-1" },
-  { id: 7, size: "col-span-1 row-span-2" },
-  { id: 8, size: "col-span-1 row-span-2" },
-  { id: 9, size: "col-span-1 row-span-3" },
-  { id: 10, size: "col-span-1 row-span-3" },
-  { id: 11, size: "col-span-1 row-span-2" },
-  { id: 12, size: "col-span-1 row-span-2" },
-  { id: 13, size: "col-span-1 row-span-2" },
-  { id: 14, size: "col-span-1 row-span-2" },
-  { id: 15, size: "md:col-span-2 row-span-1" },
-  { id: 16, size: "md:col-span-1 md:row-span-3 row-span-2" },
-  { id: 17, size: "md:col-span-2 md:row-span-3 col-span-2 row-span-2" },
-  { id: 18, size: "col-span-1 row-span-3" },
-  { id: 19, size: "md:col-span-1 md:row-span-3 col-span-1 row-span-2" },
-  { id: 20, size: "md:col-span-1 md:row-span-3 col-span-1 row-span-2" },
+  { name: "NEST", id: 1, size: "col-span-1 row-span-2" },
+  { name: "GIT", id: 2, size: "col-span-2 row-span-2" },
+  { name: "JS/TS", id: 3, size: "md:col-span-2 row-span-3 col-span-3" },
+  { name: "GSAP", id: 4, size: "col-span-1 row-span-2" },
+  { name: "C", id: 5, size: "md:col-span-1 md:row-span-1" },
+  { name: "RUST", id: 6, size: "md:col-span-1 md:row-span-1" },
+  { name: "MOTION", id: 7, size: "col-span-1 row-span-2" },
+  { name: "TAILWIND", id: 8, size: "col-span-1 row-span-2" },
+  { name: "REACT", id: 9, size: "col-span-1 row-span-3" },
+  { name: "NEXT", id: 10, size: "col-span-1 row-span-3" },
+  { name: "POSTGRES", id: 11, size: "col-span-1 row-span-2" },
+  { name: "MYSQL", id: 12, size: "col-span-1 row-span-2" },
+  { name: "GRAPHQL", id: 13, size: "col-span-1 row-span-2" },
+  { name: "DOCKER", id: 14, size: "col-span-1 row-span-2" },
+  { name: "FIREBASE", id: 15, size: "md:col-span-2 row-span-1" },
+  { name: "THREEJS", id: 16, size: "md:col-span-1 md:row-span-3 row-span-2" },
+  { name: "REACT NATIVE", id: 17, size: "md:col-span-2 md:row-span-3 col-span-2 row-span-2" },
+  { name: "N8N", id: 18, size: "col-span-1 md:row-span-3 row-span-4" },
+  { name: "AWS SDK", id: 19, size: "col-span-1 row-span-3" },
+  { name: "ALCHEMY", id: 20, size: "col-span-1 row-span-3" },
 ];
 
 export default function BentoGrid() {
@@ -30,7 +30,7 @@ export default function BentoGrid() {
             key={item.id}
             className={`bg-gray-200 rounded-3xl shadow-md flex items-center justify-center text-xl font-bold ${item.size}`}
           >
-            {item.id}
+            {item.name}
           </div>
         ))}
       </div>
