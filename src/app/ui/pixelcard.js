@@ -109,15 +109,8 @@ const VARIANTS = {
   blue: {
     activeColor: "#e0f2fe",
     gap: 10,
-    speed: 25,
+    speed: 100,
     colors: "#e0f2fe,#7dd3fc,#0ea5e9",
-    noFocus: false
-  },
-  yellow: {
-    activeColor: "#fef08a",
-    gap: 3,
-    speed: 20,
-    colors: "#fef08a,#fde047,#eab308",
     noFocus: false
   },
   pink: {
@@ -226,8 +219,6 @@ export default function PixelCard({
     animationRef.current = requestAnimationFrame(() => doAnimate(name));
   };
 
-  const onMouseEnter = () => handleAnimation("appear");
-  const onMouseLeave = () => handleAnimation("disappear");
   const onFocus = (e) => {
     if (e.currentTarget.contains(e.relatedTarget)) return;
     handleAnimation("appear");
@@ -239,27 +230,15 @@ export default function PixelCard({
 
   useEffect(() => {
     initPixels();
-    const observer = new ResizeObserver(() => {
-      initPixels();
-    });
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-    return () => {
-      observer.disconnect();
-      cancelAnimationFrame(animationRef.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    handleAnimation("appear");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finalGap, finalSpeed, finalColors, finalNoFocus]);
+  
 
   return (
     <div
       ref={containerRef}
       className={`aspect-square w-[500px] h-[500px] relative overflow-hidden grid place-items-center border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
-
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-
       onFocus={finalNoFocus ? undefined : onFocus}
       onBlur={finalNoFocus ? undefined : onBlur}
       tabIndex={finalNoFocus ? -1 : 0}
