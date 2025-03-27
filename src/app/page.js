@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Header from "./sections/header";
 import About from "./sections/about";
-import About2 from "./sections/aboutv2";
 
 export default function Home() {
   const mouseX = useMotionValue(0);
@@ -37,8 +36,8 @@ export default function Home() {
       <main className="relative flex flex-col min-h-screen h-fit w-full items-center gap-16">
         <div className="gradient-background absolute inset-0 w-full h-full pointer-events-none" />
         <Header/>
-        <About2 />
         <About />
+        <Header/>
       </main>
     </div>
   );
