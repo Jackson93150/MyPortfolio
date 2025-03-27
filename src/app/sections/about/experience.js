@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
+import RotatingText from "@/app/ui/rotatingtext";
 
 export default function Experience() {
   return (
@@ -13,7 +14,7 @@ export default function Experience() {
             repeatDelay: 2,
             type: "spring",
             stiffness: 20,
-            damping: 5, 
+            damping: 5,
             duration: 1.5,
           }}
           className="z-10 pointer-events-none"
@@ -28,7 +29,21 @@ export default function Experience() {
         </motion.div>
         <span className="text-[45%] sm:text-[60%]">Avicenne Studio</span>
       </div>
-      <span className="text-[1.2em] sm:text-[1.5em]">2022 - Now</span>
+      <div className="w-full flex justify-center items-center gap-[3%]">
+        <span className="text-[1.2em] sm:text-[1.5em]">2022 - </span>
+        <RotatingText
+          texts={["2023", "2024", "Now"]}
+          mainClassName="bg-white px-[2%] text-[1.2em] sm:text-[1.5em] tracking-normal font-ligh text-blue-500 overflow-hidden justify-center rounded-lg"
+          staggerFrom={"last"}
+          initial={{ x: "400%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "-400%" }}
+          staggerDuration={0.025}
+          splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+          transition={{ type: "spring", damping: 30, stiffness: 400 }}
+          rotationInterval={2000}
+        />
+      </div>
     </div>
   );
 }
