@@ -238,7 +238,7 @@ export default function PixelCard({
   return (
     <div
       ref={containerRef}
-      className={`aspect-square w-[500px] h-[500px] relative overflow-hidden grid place-items-center border border-[#27272a] rounded-[25px] isolate transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
+      className={`w-full h-full aspect-square relative overflow-hidden p-0 grid place-items-center border border-[#27272a] rounded-[25px] transition-colors duration-200 ease-[cubic-bezier(0.5,1,0.89,1)] select-none ${className}`}
       onFocus={finalNoFocus ? undefined : onFocus}
       onBlur={finalNoFocus ? undefined : onBlur}
       tabIndex={finalNoFocus ? -1 : 0}
