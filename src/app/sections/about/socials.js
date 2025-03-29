@@ -59,7 +59,7 @@ export default function Socials() {
           className="p-2 md:p-3 bg-white rounded-full shadow-md cursor-pointer"
           whileHover={{ scale: 1.2 }}
         >
-          <FaEnvelope className="w-4 h-4 md:w-7 md:h-7" color="#D14836" />
+          <FaEnvelope className="w-4 h-4 md:w-7 md:h-7" color="#181717" />
         </motion.button>
       </div>
     </div>

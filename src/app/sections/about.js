@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Skills from "./about/skills";
 import GridMotion from "../ui/gridmotion";
 import PictureCard from "./about/picture-card";
 import Experience from "./about/experience";
@@ -8,29 +8,29 @@ import Socials from "./about/socials";
 
 const items = [
   <Socials key="jsx-item-1" />,
-  "Skills",
-  <Education key="jsx-item-4"/>,
+  <Skills key="jsx-item-2" />,
   <Experience key="jsx-item-5" />,
+  <Education key="jsx-item-4" />,
   <PictureCard key="jsx-item-7" />,
   <Socials key="jsx-item-1" />,
-  "Skills",
-  <Education key="jsx-item-4"/>,
+  <Skills key="jsx-item-2" />,
   <Experience key="jsx-item-5" />,
+  <Education key="jsx-item-4" />,
   <PictureCard key="jsx-item-7" />,
   <Socials key="jsx-item-1" />,
-  "Skills",
-  <Education key="jsx-item-4"/>,
+  <Skills key="jsx-item-2" />,
   <Experience key="jsx-item-5" />,
+  <Education key="jsx-item-4" />,
   <PictureCard key="jsx-item-7" />,
   <Socials key="jsx-item-1" />,
-  "Skills",
-  <Education key="jsx-item-4"/>,
+  <Skills key="jsx-item-2" />,
   <Experience key="jsx-item-5" />,
+  <Education key="jsx-item-4" />,
   <PictureCard key="jsx-item-7" />,
   <Socials key="jsx-item-1" />,
-  "Skills",
-  <Education key="jsx-item-4"/>,
+  <Skills key="jsx-item-2" />,
   <Experience key="jsx-item-5" />,
+  <Education key="jsx-item-4" />,
   <PictureCard key="jsx-item-7" />,
 ];
 
