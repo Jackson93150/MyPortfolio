@@ -1,4 +1,3 @@
-import Image from "next/image";
 import PixelCard from "@/app/ui/pixelcard";
 import Timeline from "@/app/ui/timeline";
 

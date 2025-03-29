@@ -34,10 +34,7 @@ const Timeline = () => {
               stiffness: 200,
               damping: 10,
               delay: index * 1,
-              repeat: Infinity,
-              repeatDelay: 3,
             }}
-            whileInView={{ opacity: 1, scale: 1 }}
           >
             <div className="absolute -left-4 w-[1em] h-[1em] bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm" />
             <div className="ml-[5%] flex flex-col w-full items-start">
