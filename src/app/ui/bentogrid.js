@@ -23,17 +23,16 @@ const gridItems = [
 
 export default function BentoGrid() {
   return (
-    <div className="flex h-[80vh] w-[90vw] md:h-[60vh] md:w-[80vw] items-center justify-center">
-      <div className="grid h-full w-full gap-4 p-2 md:grid-cols-6 md:grid-rows-8 grid-cols-3 grid-rows-14 rounded-lg">
-        {gridItems.map((item) => (
-          <div
-            key={item.id}
-            className={`bg-gray-200 rounded-3xl shadow-md flex items-center justify-center text-xl font-bold ${item.size}`}
-          >
-            {item.name}
-          </div>
-        ))}
-      </div>
+    <div className="w-full h-full grid grid-cols-1 md:grid-cols-5 grid-rows-8 md:grid-rows-7 gap-12 md:gap-2 m-4">
+      <div className="col-start-1 row-start-1 md:col-start-1 md:row-start-1 md:col-span-1 md:row-span-2 bg-gray-300 rounded-3xl p-10">0</div>
+      <div className="col-start-1 row-start-2 md:col-start-2 md:row-start-1 md:col-span-2 md:row-span-2 bg-gray-300 rounded-3xl p-10">1</div>
+      <div className="col-start-1 row-start-3 md:col-start-4 md:row-start-1 md:col-span-2 md:row-span-4 bg-gray-300 rounded-3xl p-10">2</div>
+      <div className="col-start-1 row-start-4 md:col-start-1 md:row-start-3 md:col-span-1 md:row-span-2 bg-gray-300 rounded-3xl p-10">3</div>
+      <div className="col-start-1 row-start-5 md:col-start-2 md:row-start-3 md:col-span-1 md:row-span-2 bg-gray-300 rounded-3xl p-10">4</div>
+      <div className="col-start-1 row-start-6 md:col-start-3 md:row-start-3 md:col-span-1 md:row-span-2 bg-gray-300 rounded-3xl p-10">5</div>
+      <div className="col-start-1 row-start-7 md:col-start-1 md:row-start-5 md:col-span-2 md:row-span-3 bg-gray-300 rounded-3xl p-10">6</div>
+      <div className="col-start-1 row-start-8 md:col-start-3 md:row-start-5 md:col-span-2 md:row-span-3 bg-gray-300 rounded-3xl p-10">7</div>
+      <div className="hidden md:block md:col-start-5 md:row-start-5 md:col-span-1 md:row-span-3 bg-gray-300 rounded-3xl p-10">8</div>
     </div>
   );
 }

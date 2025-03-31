@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import Header from "./sections/header";
 import About from "./sections/about";
+import Project from "./sections/project";
 
 export default function Home() {
   const mouseX = useMotionValue(0);
@@ -37,7 +38,7 @@ export default function Home() {
         <div className="gradient-background absolute inset-0 w-full h-full pointer-events-none" />
         <Header/>
         <About />
-        <Header/>
+        <Project/>
       </main>
     </div>
   );
