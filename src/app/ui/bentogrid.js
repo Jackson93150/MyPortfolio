@@ -26,7 +26,7 @@ export default function BentoGrid() {
           description="Multiplayer treasure hunt web game with real-time ranking and interactive 3D elements"
           mediaUrl="/lootopia.mp4"
           mediaType="video"
-          scale="120"
+          scale="125"
         />
       </div>
       <div className="col-start-1 row-start-4 md:col-start-1 md:row-start-3 md:col-span-2 md:row-span-2 bg-gray-300 rounded-3xl">
