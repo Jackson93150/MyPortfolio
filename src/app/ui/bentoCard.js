@@ -19,7 +19,7 @@ export default function BentoCard({ title, description, mediaUrl, mediaType = "i
 
   return (
     <div
-      className="relative w-full h-full rounded-3xl p-2 overflow-hidden group bg-gray-300"
+      className="relative w-full h-full rounded-3xl overflow-hidden group bg-gray-300"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
