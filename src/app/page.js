@@ -24,7 +24,7 @@ export default function Home() {
   }, [mouseX, mouseY]);
 
   return (
-    <div className="flex items-center justify-items-center min-h-screen cursor-none">
+    <div className="flex items-center justify-items-center min-h-screen cursor-none overflow-hidden">
       <motion.div
         className="z-50 fixed top-[-75px] left-[-75px] w-[150px] h-[150px] bg-white rounded-full pointer-events-none"
         style={{
