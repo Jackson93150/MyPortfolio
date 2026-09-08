@@ -12,14 +12,14 @@ const NODES = [
     text: "Je rejoins Avicenne Studio et je commence mon master en alternance.",
   },
   {
-    year: "2025",
+    year: "2024",
     tag: "Master",
     text: "J'obtiens mon master à SupDeVinci.",
   },
   {
-    year: "Présent",
+    year: "2025",
     tag: "Freelance",
-    text: "Je passe en freelance, du composant au déploiement.",
+    text: "Je me lance en freelance",
   },
 ];
 

@@ -7,7 +7,12 @@ const LINKS = [
     href: "https://www.linkedin.com/in/jackson-anthonipillai-20a88a227/",
   },
   { k: "GitHub", v: "@Jackson93150", href: "https://github.com/Jackson93150" },
-  { k: "Curriculum", v: "CV · PDF", href: "/cv.pdf" },
+  {
+    k: "Curriculum",
+    v: "CV · PDF",
+    href: "/cv.pdf",
+    download: "Jackson-Anthonipillai-CV.pdf",
+  },
 ];
 
 export default function Contact() {
@@ -25,8 +30,8 @@ export default function Contact() {
           </div>
           <h2 className="pf-contact__title">ON DÉCOLLE ?</h2>
           <p className="pf-contact__lead">
-            Un produit à sortir, une API à reprendre, une interface à remettre
-            d&apos;aplomb. Dites-moi où vous en êtes, je réponds sous 24 h.
+            Vous avez un projet à faire avancer. Écrivez-moi, je vous
+            réponds sous 24&nbsp;h.
           </p>
           <div className="pf-contact__stats" data-reveal="up" style={{ "--rd": "0.15s" }}>
             <div>
@@ -62,8 +67,9 @@ export default function Contact() {
               key={l.k}
               className="pf-contact__row"
               href={l.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(l.download
+                ? { download: l.download }
+                : { target: "_blank", rel: "noopener noreferrer" })}
             >
               <span className="pf-contact__row-k">{l.k}</span>
               <span className="pf-contact__row-v">

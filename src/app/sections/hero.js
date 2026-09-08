@@ -22,8 +22,7 @@ export default function Hero() {
           <a
             className="pf-btn pf-btn--ghost"
             href="/cv.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Jackson-Anthonipillai-CV.pdf"
           >
             CV / PDF
           </a>
