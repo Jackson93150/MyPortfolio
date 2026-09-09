@@ -4,7 +4,7 @@ export default function Hero() {
   return (
     <section className="pf-hero" data-zone="dark">
       <div className="pf-hero__canvas">
-        <BlackHole accent="#b98cf0" cool="#6fb6f0" />
+        <BlackHole accent="#b98cf0" cool="#6fb6f0" boot />
       </div>
 
       <div className="pf-hero__stage">

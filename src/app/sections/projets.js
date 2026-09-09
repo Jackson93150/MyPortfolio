@@ -1,9 +1,18 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import FbxHead from "../ui/fbx-head";
 
 const PROJECTS = [
+  {
+    name: "Jarvis",
+    desc: "Assistant personnel vocal : agents connectés à Gmail, Discord, Strava et à la santé, mémoire longue et LLM local.",
+    tech: "SwiftUI · FastAPI · LLM · Docker",
+    media: "/jarvis.mp4",
+    type: "video",
+    fit: "portrait",
+    tag: "ia · mobile",
+  },
   {
     name: "Lootopia",
     desc: "Chasse au trésor multijoueur, classement temps réel et éléments 3D interactifs.",
@@ -37,22 +46,6 @@ const PROJECTS = [
     tag: "app",
   },
   {
-    name: "Dijkstra",
-    desc: "Plus court chemin dans un réseau de transport en commun.",
-    tech: "TypeScript · algo",
-    media: "/london.png",
-    type: "image",
-    tag: "algo",
-  },
-  {
-    name: "LeagueStats",
-    desc: "Statistiques et historique de parties pour League of Legends.",
-    tech: "React · Riot API",
-    media: "/stats.png",
-    type: "image",
-    tag: "data",
-  },
-  {
     name: "Portfolio",
     desc: "Ce portfolio interactif : animations et 3D temps réel.",
     tech: "Next.js · Three.js",
@@ -76,12 +69,18 @@ function CardMedia({ project, index }) {
     }
   };
 
+  const portrait = project.fit === "portrait";
+
   return (
-    <div className="pf-pcard__media" onMouseEnter={onEnter} onMouseLeave={onLeave}>
+    <div
+      className={`pf-pcard__media${portrait ? " pf-pcard__media--portrait" : ""}`}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+    >
       {project.type === "video" ? (
         <video
           ref={videoRef}
-          data-parallax="0.12"
+          data-parallax={portrait ? undefined : "0.12"}
           src={`${project.media}#t=0.1`}
           muted
           loop
@@ -104,13 +103,15 @@ function CardMedia({ project, index }) {
 }
 
 export default function Projets() {
-  const HEAD_W = 150;
   const railRef = useRef(null);
   const wrapRef = useRef(null);
   const hoverCardRef = useRef(null);
   const hideTimer = useRef(null);
+  const touchRef = useRef(false); // no hover to drive the head on a phone
+  const [touch, setTouch] = useState(false);
   const [active, setActive] = useState(0);
-  const [armed, setArmed] = useState(false); // mount the 3D head after first hover
+  const [armed, setArmed] = useState(false); // mount the 3D head on demand
+  const [inView, setInView] = useState(false);
   const [pos, setPos] = useState({ left: 0, top: 0 });
   const [headUp, setHeadUp] = useState(false);
 
@@ -119,14 +120,42 @@ export default function Projets() {
     if (!wrap || !cardEl) return;
     const w = wrap.getBoundingClientRect();
     const c = cardEl.getBoundingClientRect();
-    // centred on the card, tucked just behind its top edge
+    // the card's centre; CSS pulls the head back by half its own width
     setPos({
-      left: c.left - w.left + c.width / 2 - HEAD_W / 2,
+      left: c.left - w.left + c.width / 2,
       top: c.top - w.top - 6,
     });
   }, []);
 
+  // the card sitting closest to the middle of the rail — what a touch user is
+  // "pointing at" as they swipe
+  const centredCard = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return null;
+    const r = rail.getBoundingClientRect();
+    const mid = r.left + r.width / 2;
+    let best = null;
+    let bestD = Infinity;
+    for (const card of rail.children) {
+      const c = card.getBoundingClientRect();
+      const d = Math.abs(c.left + c.width / 2 - mid);
+      if (d < bestD) {
+        bestD = d;
+        best = card;
+      }
+    }
+    return best;
+  }, []);
+
+  const followCentred = useCallback(() => {
+    const card = centredCard();
+    if (!card) return;
+    hoverCardRef.current = card;
+    placeHead(card);
+  }, [centredCard, placeHead]);
+
   const enterCard = (e) => {
+    if (touchRef.current) return; // a tap must not hijack the scroll-driven head
     if (hideTimer.current) {
       clearTimeout(hideTimer.current);
       hideTimer.current = null;
@@ -142,6 +171,7 @@ export default function Projets() {
     }
   };
   const leaveCard = () => {
+    if (touchRef.current) return;
     hoverCardRef.current = null;
     // small delay so crossing the gap between two cards doesn't make it dip
     hideTimer.current = setTimeout(() => {
@@ -157,8 +187,43 @@ export default function Projets() {
     const max = el.scrollWidth - el.clientWidth;
     const p = max > 4 ? el.scrollLeft / max : 0;
     setActive(Math.round(p * (PROJECTS.length - 1)));
-    if (hoverCardRef.current) placeHead(hoverCardRef.current);
-  }, [placeHead]);
+    if (touchRef.current) followCentred();
+    else if (hoverCardRef.current) placeHead(hoverCardRef.current);
+  }, [followCentred, placeHead]);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    const coarse = window.matchMedia("(hover: none)").matches;
+    touchRef.current = coarse;
+    setTouch(coarse);
+
+    // only render the WebGL head while the carousel is actually on screen
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+        if (!coarse || !entry.isIntersecting) return;
+        // on touch the head just rides along with the centred card
+        followCentred();
+        setArmed(true);
+        setHeadUp(true);
+      },
+      { rootMargin: "0px 0px -15% 0px" }
+    );
+    io.observe(wrap);
+
+    const onResize = () => {
+      if (touchRef.current) followCentred();
+      else if (hoverCardRef.current) placeHead(hoverCardRef.current);
+    };
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      io.disconnect();
+      window.removeEventListener("resize", onResize);
+    };
+  }, [followCentred, placeHead]);
 
   return (
     <section id="projets" className="pf-section pf-projects" data-zone="light">
@@ -209,9 +274,10 @@ export default function Projets() {
           <div
             className="pf-projects__head3d"
             data-on={headUp ? "true" : "false"}
+            data-touch={touch ? "true" : "false"}
             style={{ left: pos.left, top: pos.top }}
           >
-            <FbxHead src="/idle.fbx" visible={armed} />
+            <FbxHead src="/idle.fbx" visible={armed && inView} />
           </div>
         )}
       </div>
@@ -225,7 +291,7 @@ export default function Projets() {
             <span key={p.name} className={i === active ? "is-active" : ""} />
           ))}
         </div>
-        <span className="pf-projects__count">Sept projets · sélection</span>
+        <span className="pf-projects__count">Six projets · sélection</span>
       </div>
     </section>
   );

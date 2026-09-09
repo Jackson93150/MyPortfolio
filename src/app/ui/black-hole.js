@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { finishBoot, setBootProgress } from "./boot";
 
 /* ---------- lensed starfield (GPU points, no per-pixel raymarch) ---------- */
 const starVert = /* glsl */ `
@@ -148,6 +149,7 @@ export default function BlackHole({
   cool = "#6fb6f0",
   className,
   starsOnly = false,
+  boot = false, // report this instance's asset loading to the boot screen
 }) {
   const mountRef = useRef(null);
 
@@ -395,10 +397,15 @@ export default function BlackHole({
     let figure = null;
     let figureBaseY = 0;
     let mixer = null;
+    // the boot screen waits on this instance; every exit path has to release it
+    const report = boot ? setBootProgress : () => {};
+    const release = boot ? finishBoot : () => {};
+    if (starsOnly) release();
     if (!starsOnly)
       import("three/addons/loaders/FBXLoader.js")
       .then(({ FBXLoader }) => {
-        if (disposed) return;
+        if (disposed) return release();
+        report(0.08);
         new FBXLoader().load(
           "/male-dynamic-pose.fbx",
           (obj) => {
@@ -449,12 +456,23 @@ export default function BlackHole({
             obj.renderOrder = 0;
             figure = obj;
             scene.add(figure);
+            // one frame with the figure in it before the curtain lifts
+            requestAnimationFrame(release);
           },
-          undefined,
-          (err) => console.warn("[black-hole] FBX load failed:", err)
+          (e) => {
+            if (!e || !e.lengthComputable || !e.total) return;
+            report(0.08 + 0.88 * (e.loaded / e.total));
+          },
+          (err) => {
+            console.warn("[black-hole] FBX load failed:", err);
+            release();
+          }
         );
       })
-      .catch((e) => console.warn("[black-hole] FBXLoader import failed:", e));
+      .catch((e) => {
+        console.warn("[black-hole] FBXLoader import failed:", e);
+        release();
+      });
 
     /* --- sizing --- */
     let lw = 0;
@@ -602,7 +620,7 @@ export default function BlackHole({
         host.removeChild(renderer.domElement);
       }
     };
-  }, [accent, cool, starsOnly]);
+  }, [accent, cool, starsOnly, boot]);
 
   return <div ref={mountRef} className={className} aria-hidden="true" />;
 }

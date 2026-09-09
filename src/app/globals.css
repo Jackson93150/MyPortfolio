@@ -880,22 +880,27 @@ html[data-fx] .pf-stack__grid.is-in .pf-srow__fill {
 }
 
 /* 3D head that hides behind the card and rises above its top edge on hover */
+/* `left` is the centre of the target card; the -50% here does the centring so
+   the head can be resized per breakpoint without the JS knowing its width */
 .pf-projects__head3d {
   position: absolute;
   top: 0;
   left: 0;
-  width: 150px;
-  height: 190px;
+  width: var(--head-w, 150px);
+  height: var(--head-h, 190px);
   z-index: 1; /* behind the cards */
   pointer-events: none;
-  transform: translateY(64px); /* resting: fully tucked behind the card */
+  /* resting: fully tucked behind the card. --head-dx nudges it sideways on
+     narrow screens so it doesn't land on top of the section title */
+  transform: translate(calc(-50% + var(--head-dx, 0px)), var(--head-rest, 64px));
   transition: transform 0.46s cubic-bezier(0.16, 1, 0.3, 1),
     left 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .pf-projects__head3d[data-on="true"] {
-  transform: translateY(-160px); /* risen: whole head clears the card top */
+  /* risen: the whole head clears the card top */
+  transform: translate(calc(-50% + var(--head-dx, 0px)), var(--head-up, -160px));
 }
 
 .pf-projects__fade {
@@ -1545,6 +1550,96 @@ html[data-fx] [data-stagger].is-in > * {
 }
 
 /* ============================================================
+   Boot screen
+   --------------------------------------------------------------
+   Only exists when the page is script-driven ([data-fx]); without
+   JS there is nothing to wait for and nothing to dismiss it.
+   ============================================================ */
+.pf-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gutter);
+  background: radial-gradient(120% 90% at 50% 42%, #1b1730 0%, #100e1c 58%, #0a0912 100%);
+  color: #efeaf8;
+  transition: opacity 0.7s ease, visibility 0.7s;
+}
+
+html[data-fx] .pf-boot {
+  display: flex;
+}
+
+.pf-boot[data-leaving="true"] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* nothing scrolls behind the curtain */
+html[data-fx]:not([data-booted]) body {
+  overflow: hidden;
+}
+
+.pf-boot__inner {
+  width: min(340px, 100%);
+  text-align: center;
+}
+
+.pf-boot__brand {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 5vw, 38px);
+  letter-spacing: 0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, #efeaff 34%, #b9b0d8 60%, #ffffff 100%);
+  background-size: 100% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: om-chrome 6s ease-in-out infinite;
+}
+
+.pf-boot__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 26px 0 10px;
+  font: 400 9.5px var(--font-mono);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--hero-mist);
+}
+
+.pf-boot__pct {
+  color: var(--violet-lite);
+  font-variant-numeric: tabular-nums;
+}
+
+.pf-boot__track {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(239, 234, 248, 0.14);
+}
+
+.pf-boot__track i {
+  display: block;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--blue), var(--violet-lite) 62%, var(--violet));
+}
+
+/* the hero's entrance is held back until the curtain lifts, otherwise it plays
+   out of sight while the assets are still downloading */
+html[data-fx]:not([data-booted]) .pf-in {
+  animation-play-state: paused;
+}
+
+/* ============================================================
    Section seams & rules
    ============================================================ */
 /* extra room under the carousel so its footer clears the fade to black */
@@ -1681,6 +1776,29 @@ html[data-fx] [data-stagger].is-in > * {
   height: 118%;
 }
 
+/* ------------------------------------------------------------
+   Portrait media (phone captures) — shown whole, centred on a
+   backdrop tinted with the app's own colour instead of being
+   cropped to a sliver by object-fit: cover.
+   ------------------------------------------------------------ */
+.pf-pcard__media--portrait {
+  background:
+    radial-gradient(70% 90% at 50% 45%, rgba(28, 220, 200, 0.16), transparent 70%),
+    linear-gradient(180deg, #0d1a1c, #071012);
+}
+
+.pf-pcard__media--portrait video,
+.pf-pcard__media--portrait img {
+  left: 50%;
+  top: 50%;
+  width: auto;
+  height: 92%;
+  translate: -50% -50%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(150, 245, 235, 0.18), 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
 /* ============================================================
    Interaction polish
    ============================================================ */
@@ -1746,6 +1864,16 @@ html[data-fx] [data-stagger].is-in > * {
 }
 
 @media (max-width: 820px) {
+  /* touch layouts only: there the head is permanent and scroll-driven, so it
+     is sized down and parked in the free space right of the title. A narrow
+     desktop window keeps the centred, on-hover behaviour. */
+  .pf-projects__head3d[data-touch="true"] {
+    --head-w: 116px;
+    --head-h: 148px;
+    --head-rest: 50px;
+    --head-up: -118px;
+    --head-dx: 74px;
+  }
   .pf-nav__links {
     display: none;
   }
@@ -1909,8 +2037,13 @@ html[data-fx] [data-stagger].is-in > * {
   .pf-nav,
   .pf-nav__sheet,
   .pf-nav__sheet a,
-  .pf-nav__links a::after {
+  .pf-nav__links a::after,
+  .pf-boot {
     transition: none !important;
+  }
+
+  .pf-boot__brand {
+    animation: none !important;
   }
 
   html {

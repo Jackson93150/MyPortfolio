@@ -4,6 +4,7 @@ import SmoothScroll from "./ui/smooth-scroll";
 import ScrollReveal from "./ui/scroll-reveal";
 import ScrollScenes from "./ui/scroll-scenes";
 import SiteNav from "./ui/site-nav";
+import BootScreen from "./ui/boot-screen";
 
 const michroma = Michroma({
   variable: "--font-michroma",
@@ -49,6 +50,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="antialiased">
+        <BootScreen />
         <SmoothScroll />
         <ScrollReveal />
         <ScrollScenes />
